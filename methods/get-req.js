@@ -10,6 +10,18 @@ module.exports=(req,res)=>{
        res.write(JSON.stringify(req.stocks)); 
         res.end(); 
 
+    }else if(req.url==="/api/sales"){
+        res.statusCode=200;
+        res.setHeader("content-Type","application/json");
+       res.write(JSON.stringify(req.sales)); 
+        res.end(); 
+
+    } else if(req.url==="/api/users"){
+        res.statusCode=200;
+        res.setHeader("content-Type","application/json");
+       res.write(JSON.stringify(req.movies)); 
+        res.end(); 
+
     }else if(!regexv4.test(id)){
         res.writeHead(404,{"content-Type":"application/json"})
         res.end(JSON.stringify({title:"Invalid uuid", message:"uuid no valid"}));
@@ -28,8 +40,24 @@ return stock.id===id;
     res.writeHead(404,{"content-Type":"application/json"})
     res.end(JSON.stringify({title:"movie found", message:"movie not found"}));
    }
+    }else if(regexv4.test(id)&&baseurl==="/users/user/"){
+        res.statusCode=200;
+        res.setHeader("content-Type","application/json");
+   let filtereduser=req.movies.filter((user)=>{
+return user.id===id;
+   });
+   if(filtereduser.length>0){
+    res.statusCode=200;
+     
+       res.write(JSON.stringify(filtereduser)); 
+        res.end(); 
+   }else{
+    res.writeHead(404,{"content-Type":"application/json"})
+    res.end(JSON.stringify({title:"movie found", message:"movie not found"}));
+   }
     }else{
         res.writeHead(404,{"content-Type":"application/json"})
         res.end(JSON.stringify({title:"not found", message:"page not found"}));
     }
+    
 }

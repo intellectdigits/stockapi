@@ -9,21 +9,21 @@ module.exports=async (req,res)=>{
     if(!regexv4.test(id)){
         res.writeHead(404,{"content-Type":"application/json"})
         res.end(JSON.stringify({title:"Invalid uuid", message:"uuid no valid"}));
-    }else if(regexv4.test(id)&&baseurl==="/api/movies/"){
+    }else if(regexv4.test(id)&&baseurl==="/api/stocks/"){
         try{
             let body=await requestbodyparser(req);
-            const index=req.movies.findIndex((movie)=>{
+            const index=req.stocks.findIndex((movie)=>{
                 return movie.id===id;
                    });
                    if(index===-1){
                     res.writeHead(404,{"content-Type":"application/json"})
                     res.end(JSON.stringify({title:"movie found", message:"movie not found"}));
                    }else{
-                   req.movies[index]={id, ...body};
+                   req.stocks[index]={id, ...body};
                  //  console.log(body);
-                   writetofile(req.movies);
+                   writetofile(req.stocks);
                    res.writeHead(204,{"Content-type":"application/json"})
-                   res.end(JSON.stringify(req.movies[index]));
+                   res.end(JSON.stringify(req.stocks[index]));
                    } 
         }catch(err){
             console.log(err)

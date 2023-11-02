@@ -1,14 +1,20 @@
 const http= require('http');
+const express = require("express") 
+const path = require("path") 
+const multer = require("multer") 
+const app = express() 
 let movies =require("./data/movies.json")
 
 let stocks =require("./data/stocks.json")
+let sales =require("./data/sales.json")
+let customers =require("./data/customers.json")
 const getreq=require("./methods/get-req")
 const postreq=require("./methods/post-req")
 const putreq=require("./methods/put-req")
 const delreq=require("./methods/delete-req")
 require('dotenv').config();
 const PORT = process.env.PORT || 5001;
-const server=http.createServer((req,res)=>{
+const server=app.use((req,res)=>{
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control-Allow-Methods","PUT,GET,DELETE,PATCH")
     res.setHeader('Access-Control-Allow-Credentials', true)
@@ -16,6 +22,8 @@ const server=http.createServer((req,res)=>{
 
     req.movies=movies;
     req.stocks=stocks;
+    req.sales=sales;
+    req.customers=customers;
     switch(req.method){
      
         case "GET":
